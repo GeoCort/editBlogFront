@@ -17,10 +17,11 @@ export default function Login(props){
         console.log("clicked and working")
         let response =  await axios.post(`https://backendblogapi-b563b8bcb606.herokuapp.com/api/login`, loginForm)
         if(response.status == 200){
+            let token = response.data.token
+            props.handleAuth(token, response.data.token)
             localStorage.setItem("token", response.data.token)
-            localStorage.setItem("user", response.data.user.id)
+            localStorage.setItem("userId", response.data.user.id)
         }
-        
     }
     return(
         <section>

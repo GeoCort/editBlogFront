@@ -7,15 +7,27 @@ import Sidebar from './components/main/Sidebar.jsx'
 import Body from './components/main/Body.jsx'
 import Login from './components/auth/Login.jsx'
 function App() {
+  const [token, setToken ] = useState("")
+  const [userId, setUserId] = useState("")
   const [auth, setAuth] = useState(false);
+  const handleAuth = (token, id)=>{
+    setToken(token)
+    setUserId(id)
+  }
   useEffect( ()=>{
-    if(localStorage.getItem("token")){
+    let storageToken = localStorage.getItem("token")
+    if(storageToken){
+      console.log("this happened")
       setAuth(true)
+      setToken(storageToken)
+      setUserId(localStorage.getItem("userid"))
+    }else{
+      setAuth(false)
     }
-  })
+  },[token])
   return (
    <> 
-      {auth == true? <Body/> : <Login/>}
+      {auth == true? <Body/> : <Login handleAuth={handleAuth}/>}
     </>
   )
 }
